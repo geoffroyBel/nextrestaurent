@@ -4,7 +4,16 @@ import * as jwt from "jose";
 import { JWTPayload } from "jose";
 const secretKey = "votre_clé_secrète";
 
-export const config = { matcher: ["/api/recipies/", "/api/recipies/:path*"] };
+export const config = {
+  matcher: [
+    "/api/recipies/",
+    "/api/recipies/:path*",
+    "/api/ingredients/",
+    "/api/ingredients/:path*",
+    "/api/etapes/",
+    "/api/etapes/:path*",
+  ],
+};
 export async function verify(
   token: string,
   secret: string
