@@ -28,6 +28,7 @@ export const authOptions: AuthOptions = {
 
         if (
           user &&
+          user.password &&
           (await bcrypt.compare(credentials.password, user.password))
         ) {
           return user;

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
+
 import { db } from "@/db";
 import bcrypt from "bcrypt";
 const secretKey = "votre_clé_secrète";
