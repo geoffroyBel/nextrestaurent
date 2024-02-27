@@ -7,58 +7,74 @@ import {
   PopoverContent,
   PopoverTrigger,
   Button,
+  Divider,
 } from "@nextui-org/react";
 import * as actions from "@/actions";
 import FormButton from "../common/form-button";
-interface IPostCreateForm {
-  slug: string;
+import { useEffect, useState } from "react";
+import { Recipe } from "@prisma/client";
+interface IPostEditForm {
+  recipe: Recipe;
 }
-export default function PostCreateForm({ slug }: IPostCreateForm) {
+export default function RecipeEditForm({ recipe }: IPostEditForm) {
+  const [ingredients, setIngredients] = useState([{}]);
   const [formState, action] = useFormState(
-    actions.createPost.bind(null, slug),
-    { errors: {} }
+    actions.editRecipe.bind(null, `${recipe.id}`),
+    {
+      errors: {},
+    }
   );
+  const handleAddIngredient = () => {
+    setIngredients([...ingredients, {}]);
+  };
+
   return (
     <Popover placement="left">
       <PopoverTrigger>
-        <Button color="primary"> Create post</Button>
+        <Button color="primary">Edit</Button>
       </PopoverTrigger>
       <PopoverContent>
         <form action={action}>
           <div className="flex flex-col gap-4 p-4 w-80">
-            <h3 className="text-lg">Create a Post</h3>
+            <h3 className="text-lg">Create Post</h3>
             <Input
               name="nom"
               label="Nom"
               placeholder="enter youy title"
               labelPlacement="outside"
-              isInvalid={!!formState.errors.title}
-              errorMessage={formState.errors.title?.join(", ")}
+              isInvalid={!!formState.errors.nom}
+              errorMessage={formState.errors.nom?.join(", ")}
+              defaultValue={recipe.nom}
             />
             <Textarea
               name="description"
               label="Description"
               placeholder="Description"
               labelPlacement="outside"
-              // isInvalid={!!formState.errors.content}
-              // errorMessage={formState.errors.content?.join(", ")}
+              isInvalid={!!formState.errors.description}
+              errorMessage={formState.errors.description?.join(", ")}
+              defaultValue={recipe.description}
             />
             <Input
               name="difficulte"
               label="Difficulté"
               placeholder="1 a 5 etoiles"
               labelPlacement="outside"
-              // isInvalid={!!formState.errors.title}
-              // errorMessage={formState.errors.title?.join(", ")}
+              isInvalid={!!formState.errors.difficulte}
+              errorMessage={formState.errors.difficulte?.join(", ")}
+              defaultValue={`${recipe.difficulte}`}
             />
             <Input
               name="temps"
               label="Temps"
               placeholder="estimation temps"
               labelPlacement="outside"
-              // isInvalid={!!formState.errors.title}
-              // errorMessage={formState.errors.title?.join(", ")}
+              isInvalid={!!formState.errors.temps}
+              errorMessage={formState.errors.temps?.join(", ")}
+              defaultValue={`${recipe.temps}`}
             />
+            <Divider></Divider>
+
             {formState.errors._form && (
               <div className="text-white p-2 rounded border-red-500  bg-red-200">
                 {formState.errors._form?.join(", ")}

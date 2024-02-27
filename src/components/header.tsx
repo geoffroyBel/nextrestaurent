@@ -52,13 +52,19 @@ export default async function Header() {
     <Navbar className="shadow mb-6">
       <NavbarBrand>
         <Link href="/" className="font-bold">
-          Discuss
+          El Jasmin
         </Link>
       </NavbarBrand>
-
-      <NavbarContent justify="center">
+      <NavbarContent justify="start">
         <NavbarItem>
-          <Input />
+          <Link color="foreground" href="#">
+            Acceuil
+          </Link>
+        </NavbarItem>
+        <NavbarItem isActive>
+          <Link href="/recipies" aria-current="page">
+            Recettes
+          </Link>
         </NavbarItem>
       </NavbarContent>
 
