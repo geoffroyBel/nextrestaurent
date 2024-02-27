@@ -1,6 +1,6 @@
 "use server";
 import { z } from "zod";
-import { auth } from "@/auth";
+
 import { db } from "@/db";
 import { Recipe } from "@prisma/client";
 import { redirect } from "next/navigation";
@@ -42,42 +42,42 @@ export async function editRecipe(
     };
   }
 
-  const session = await auth();
-  if (!session || !session.user) {
-    return {
-      errors: {
-        _form: ["You must be signed in to do this"],
-      },
-    };
-  }
-  let recipe: Recipe;
-  try {
-    recipe = await db.recipe.update({
-      where: { id: +id },
-      data: {
-        nom: result.data.nom,
-        description: result.data.description,
-        temps: `${result.data.temps}`,
-        difficulte: 1,
-        userId: session.user.id,
-      },
-    });
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      return {
-        errors: {
-          _form: [error.message],
-        },
-      };
-    } else {
-      return {
-        errors: {
-          _form: ["error.message probleme "],
-        },
-      };
-    }
-  }
-  revalidatePath(paths.recipeDetail(recipe.id));
+  // const session = await auth();
+  // if (!session || !session.user) {
+  //   return {
+  //     errors: {
+  //       _form: ["You must be signed in to do this"],
+  //     },
+  //   };
+  // }
+  // let recipe: Recipe;
+  // try {
+  //   recipe = await db.recipe.update({
+  //     where: { id: +id },
+  //     data: {
+  //       nom: result.data.nom,
+  //       description: result.data.description,
+  //       temps: `${result.data.temps}`,
+  //       difficulte: 1,
+  //       userId: session.user.id,
+  //     },
+  //   });
+  // } catch (error: unknown) {
+  //   if (error instanceof Error) {
+  //     return {
+  //       errors: {
+  //         _form: [error.message],
+  //       },
+  //     };
+  //   } else {
+  //     return {
+  //       errors: {
+  //         _form: ["error.message probleme "],
+  //       },
+  //     };
+  //   }
+  // }
+  // revalidatePath(paths.recipeDetail(recipe.id));
 
   return {
     errors: {},

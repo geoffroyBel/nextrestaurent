@@ -14,6 +14,7 @@ export const fetchAllRecipies = cache((): Promise<any[]> => {
           image: true,
         },
       },
+      etapes: true,
     },
   });
 });
@@ -22,6 +23,13 @@ export const fetchRecipeById = cache((id: string): Promise<any> => {
   return db.recipe.findFirst({
     where: {
       id: +id,
+    },
+    include: {
+      etapes: {
+        include: {
+          ingredient: true,
+        },
+      },
     },
   });
 });

@@ -41,6 +41,7 @@ model User {
   emailVerified DateTime?
   isAdmin       Boolean?  @default(false)
   image         String?
+  password      String?
   accounts      Account[]
   sessions      Session[]
   Recipe        Recipe[]
@@ -71,12 +72,6 @@ model Ingrediant {
   id     Int     @id @default(autoincrement())
   name   String?
   etapes Etape[]
-  // recipe   Recipe  @relation(fields: [recipeId], references: [id])
-  // recipeId Int
-
-  // user       User     @relation(fields: [userId], references: [id])
-  // userId     Int 
-  // @@unique([name, recipeId])
 }
 
 model Etape {
@@ -87,8 +82,19 @@ model Etape {
   ingredientId Int
   quantite     Int
   instructions String
+
+  @@unique([recipeId, ingredientId])
 }
 
+// model Etape {
+//   id           Int        @id @default(autoincrement())
+//   recipe       Recipe     @relation(fields: [recipeId], references: [id])
+//   recipeId     Int
+//   ingredient   Ingrediant @relation(fields: [ingredientId], references: [id])
+//   ingredientId Int
+//   quantite     Int
+//   instructions String
+// }
 // model Ingredient {
 //   id     String               @id @default(cuid())
 //   nom    String

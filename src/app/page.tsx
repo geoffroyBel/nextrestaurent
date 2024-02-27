@@ -4,10 +4,16 @@
 // import { fetchTopPosts } from "@/db/queries/posts";
 // import { Divider } from "@nextui-org/react";
 import img from "@/../public/Food.png";
+import { authOptions } from "@/authOptions";
 import Hero from "@/components/Hero";
 import { TopRecipiesList } from "@/components/Recepies/top-recepies-list";
+import { RedirectCustom } from "@/components/common/redirectCustom";
+import { getServerSession } from "next-auth";
 
 export default async function Home() {
+  const session = await getServerSession(authOptions);
+  console.log(session);
+
   return (
     <>
       <Hero

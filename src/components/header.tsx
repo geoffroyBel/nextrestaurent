@@ -57,7 +57,7 @@ export default async function Header() {
       </NavbarBrand>
       <NavbarContent justify="start">
         <NavbarItem>
-          <Link color="foreground" href="#">
+          <Link color="foreground" href="/">
             Acceuil
           </Link>
         </NavbarItem>

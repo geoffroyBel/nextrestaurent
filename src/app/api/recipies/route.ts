@@ -18,7 +18,6 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET(req: NextRequest) {
-  const { nom, description, difficulte, temps } = await req.json();
   //to validation
   try {
     const recipe = await db.recipe.findMany();

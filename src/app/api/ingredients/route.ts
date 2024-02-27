@@ -16,13 +16,13 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET(req: NextRequest) {
-  const { name } = await req.json();
-  //to validation
   try {
     const ingredients = await db.ingrediant.findMany();
+    console.log(ingredients);
+
     return NextResponse.json(
-      { message: "List all ingredients", data: ingredients },
-      { status: 201 }
+      { message: "List of ingredients", data: ingredients },
+      { status: 200 }
     );
   } catch (error) {
     return NextResponse.json({ message: "Error", error }, { status: 500 });
