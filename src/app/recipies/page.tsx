@@ -10,7 +10,7 @@ export default async function RecepiesPage() {
   const session = await getServerSession(authOptions);
   console.log("------------recipe");
   console.log(session?.user);
-  if (!session?.user.isAdmin) redirect("/");
+  if (!session?.user) redirect("/");
   return (
     <div className="grid grid-cols-4 gap-4 p-4">
       {/* <RedirectCustom /> */}
