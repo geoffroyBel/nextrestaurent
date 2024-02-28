@@ -36,5 +36,10 @@ export async function middleware(req: NextRequest) {
     );
   }
   const decoded = await verify(token, secretKey);
-  console.log(decoded);
+  if (!decoded.isAdmin) {
+    return NextResponse.json(
+      { success: false, message: "not authorize for this action" },
+      { status: 401 }
+    );
+  }
 }

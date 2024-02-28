@@ -24,7 +24,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
       throw new Error("User Alredy exist");
     }
     const isValid = await bcrypt.compare(password, user.password);
-    const token = jwt.sign({ email: email, userId: user.id }, secretKey);
+    const token = jwt.sign(
+      { email: email, userId: user.id, isAdmin: user.isAdmin },
+      secretKey
+    );
     if (!isValid) {
       throw new Error("Invalid password");
     }
