@@ -1,29 +1,37 @@
 import { fetchRecipeById } from "@/db/queries/recipies";
 import { Button, Divider } from "@nextui-org/react";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import * as actions from "@/actions";
 import RecipeEditForm from "@/components/Recepies/recipe-edit-form";
 import { Etape, Ingrediant } from "@prisma/client";
+import Link from "next/link";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/authOptions";
+import paths from "@/path";
 interface IRecipedetail {
   params: { id: string };
 }
 export default async function RecipeDetail({ params }: IRecipedetail) {
+  const session = await getServerSession(authOptions);
+  if (!session?.user) redirect(paths.recipiesShow());
   const { id } = params;
   const recipe = await fetchRecipeById(id);
-  console.log(recipe);
+
   const ingredients = recipe.etapes.map(
     (el: Etape & { ingredient: Ingrediant }) => ({
       name: el.ingredient.name,
       quantite: el.quantite,
     })
   );
-  console.log(ingredients);
 
   if (!recipe) notFound();
   const deleteRecipeAction = actions.deleteRecipe.bind(null, id);
   return (
     <div>
       <div className="flex flex-row gap-3 justify-center mb-4">
+        <Link className="text-font text-lg" href={paths.recipiesShow()}>
+          Back
+        </Link>
         <RecipeEditForm recipe={recipe} />
         <form action={deleteRecipeAction}>
           <Button type="submit" color="danger">

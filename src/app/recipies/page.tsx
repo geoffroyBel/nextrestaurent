@@ -3,14 +3,13 @@ import RecipeCreateForm from "@/components/Recepies/recipe-create-form";
 import RecipiesList from "@/components/Recepies/recipies-list";
 import { RedirectCustom } from "@/components/common/redirectCustom";
 import { fetchAllRecipies } from "@/db/queries/recipies";
+import paths from "@/path";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
 export default async function RecepiesPage() {
   const session = await getServerSession(authOptions);
-  console.log("------------recipe");
-  console.log(session?.user);
-  if (!session?.user) redirect("/");
+  if (!session?.user) redirect(paths.home());
   return (
     <div className="grid grid-cols-4 gap-4 p-4">
       {/* <RedirectCustom /> */}
